@@ -74,10 +74,9 @@ mensagem do paciente
 Pré-requisito: [`uv`](https://docs.astral.sh/uv/) instalado.
 
 ```bash
-make chat-venv     # cria o venv leve da Fase 5 (Flask) e instala as dependências
+make chat-venv     # cria o venv da Fase 5 e instala TODAS as dependências (Flask + Watson + LLMs)
 make chat          # sobe o assistente em http://localhost:5001
 make chat-test     # roda a suíte de testes da Fase 5 (30 casos)
-make chat-extras   # (opcional) instala IBM Watson + SDKs de LLM
 ```
 
 Para a demo mobile: `make chat` em um terminal e `make mobile` em outro → aba

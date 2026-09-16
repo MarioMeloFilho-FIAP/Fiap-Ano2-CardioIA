@@ -18,7 +18,7 @@ CHAT_TESTS := tests/test_engine.py tests/test_router.py tests/test_storage.py te
 .DEFAULT_GOAL := help
 
 .PHONY: all prep-venv shell dataset jupyter train web test clean help \
-        chat-venv chat chat-test chat-extras demo mobile
+        chat-venv chat chat-test demo mobile
 
 all: prep-venv
 	source $(VENV_BIN)/activate && /bin/bash
@@ -50,18 +50,13 @@ test:
 chat-venv:
 	$(UV) venv $(CHAT_VENV) --python $(PY311)
 	$(UV) pip install --python $(CHAT_PY) -r chatbot/requirements.txt
-	@echo ">> venv '$(CHAT_VENV)' pronto (chatbot Flask, sem TensorFlow)."
+	@echo ">> venv '$(CHAT_VENV)' pronto (Flask + Watson + LLMs, sem TensorFlow)."
 
 chat:
 	$(CHAT_PY) -m chatbot.app
 
 chat-test:
 	$(CHAT_PY) -m pytest $(CHAT_TESTS) -q
-
-# Dependências opcionais: IBM Watson + SDKs de LLM (ver chatbot/requirements-optional.txt)
-chat-extras:
-	$(UV) pip install --python $(CHAT_PY) -r chatbot/requirements-optional.txt
-	@echo ">> extras instalados (Watson + LLM). Configure as credenciais em chatbot/.env."
 
 # ------------------------------ Apresentação --------------------------------
 # Sobe os DOIS backends de uma vez: visão (Fase 4, :5000) + chatbot (Fase 5, :5001).
@@ -94,7 +89,6 @@ help:
 	@echo "  chat-venv   Cria o venv '$(CHAT_VENV)' (chatbot, sem TensorFlow)"
 	@echo "  chat        Sobe o assistente Flask (http://localhost:5001)"
 	@echo "  chat-test   Roda os testes da Fase 5 (engine/router/storage/skill)"
-	@echo "  chat-extras Instala opcionais: IBM Watson + SDKs de LLM"
 	@echo "  --- Apresentação ---"
 	@echo "  demo        Sobe os DOIS backends juntos (visão :5000 + chatbot :5001)"
 	@echo "  mobile      Inicia o app Expo (npm install + expo start)"

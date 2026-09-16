@@ -1,14 +1,23 @@
 # CardioIA — Fase 5 (Assistente Cardiológico Conversacional)
 # venv LEVE: o chatbot NÃO depende de TensorFlow (roda separado da Fase 4).
+# Instale tudo de uma vez com:  make chat-venv
+# (os SDKs precisam ser resolvidos JUNTOS pelo uv; instalar em comandos
+#  separados pode remover pacotes já instalados — por isso ficam todos aqui.)
 
-# --- Núcleo (obrigatório) ---
+# --- Núcleo (backend + interface web) ---
 flask==3.0.3
 flask-cors==4.0.1
 python-dotenv==1.0.1
 
-# --- Opcionais (Watson + LLM) ---
-# Ficam em chatbot/requirements-optional.txt. Instale com:  make chat-extras
-# Sem eles, o assistente roda com o motor NLU local. SQLite é da stdlib.
+# --- Integração real com IBM Watson Assistant ---
+ibm-watson==11.2.0
+
+# --- Camada NLG (LLM) — provedores neutros; use o que tiver chave no .env ---
+openai==3.14.1
+anthropic==1.6.0
+google-generativeai==0.8.6
+
+# SQLite é da stdlib (sqlite3) — não precisa instalar nada.
 
 # --- Testes ---
 pytest==8.3.3
