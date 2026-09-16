@@ -1,0 +1,14 @@
+# CardioIA — Fase 5 (Assistente Cardiológico Conversacional)
+# venv LEVE: o chatbot NÃO depende de TensorFlow (roda separado da Fase 4).
+
+# --- Núcleo (obrigatório) ---
+flask==3.0.3
+flask-cors==4.0.1
+python-dotenv==1.0.1
+
+# --- Opcionais (Watson + LLM) ---
+# Ficam em chatbot/requirements-optional.txt. Instale com:  make chat-extras
+# Sem eles, o assistente roda com o motor NLU local. SQLite é da stdlib.
+
+# --- Testes ---
+pytest==8.3.3

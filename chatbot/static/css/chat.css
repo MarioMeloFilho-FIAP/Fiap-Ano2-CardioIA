@@ -1,0 +1,106 @@
+/* CardioIA — Fase 5: interface web do assistente. Paleta alinhada à Fase 4. */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1a2430;
+  display: flex;
+  flex-direction: column;
+  /* Altura fixa + overflow hidden fazem a lista de mensagens ser o ÚNICO
+     elemento rolável, permitindo o auto-scroll ao chegar cada resposta. */
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topo {
+  background: #0d3c75;
+  color: #fff;
+  padding: 16px 20px;
+  text-align: center;
+}
+.topo h1 { margin: 0; font-size: 22px; font-weight: 800; }
+.topo h1 span { font-weight: 400; opacity: 0.9; font-size: 16px; }
+.topo .sub { margin: 4px 0 8px; font-size: 13px; opacity: 0.85; }
+.badges { margin: 0; display: flex; gap: 8px; justify-content: center; }
+.badge {
+  font-size: 11px; padding: 2px 10px; border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.badge.on { background: #2e7d32; border-color: #2e7d32; }
+.badge.off { opacity: 0.6; }
+
+.chat {
+  flex: 1;
+  min-height: 0; /* permite que a lista interna encolha e role */
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mensagens {
+  flex: 1;
+  min-height: 0; /* essencial: sem isto, o container cresce e não rola */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 4px 16px;
+  overflow-y: auto;
+}
+
+.bolha {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  font-size: 15px;
+}
+.bolha.usuario {
+  align-self: flex-end;
+  background: #1565c0;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.bolha.assistente {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid #dfe6ee;
+  border-bottom-left-radius: 4px;
+}
+.bolha.emergencia { border-color: #c62828; background: #fdecea; }
+.bolha .meta { display: block; margin-top: 6px; font-size: 11px; color: #7a8697; }
+.bolha.usuario .meta { color: rgba(255, 255, 255, 0.8); }
+
+.entrada { display: flex; gap: 8px; padding-top: 8px; }
+.entrada input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #c6d0dd;
+  border-radius: 24px;
+  font-size: 15px;
+}
+.entrada input:focus { outline: none; border-color: #1565c0; }
+.entrada button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 24px;
+  background: #1565c0;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.entrada button:disabled { background: #9bb4d1; cursor: default; }
+
+.rodape {
+  background: #eef2f7;
+  color: #5b6470;
+  font-size: 12px;
+  text-align: center;
+  padding: 12px 20px;
+}
+.rodape p { margin: 0; max-width: 720px; margin: 0 auto; }

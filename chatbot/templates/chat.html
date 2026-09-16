@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CardioIA · Assistente Cardiológico</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <h1>CardioIA <span>· Assistente Cardiológico</span></h1>
+    <p class="sub">Fase 5 — Assistente Conversacional (NLP)</p>
+    <p class="badges">
+      <span class="badge on">NLU</span>
+      {% if watson_ativo %}<span class="badge on">Watson</span>{% endif %}
+      {% if llm_ativo %}<span class="badge on">NLG</span>{% endif %}
+    </p>
+  </header>
+
+  <main class="chat">
+    <div id="mensagens" class="mensagens" aria-live="polite"></div>
+
+    <form id="form" class="entrada" autocomplete="off">
+      <input id="campo" type="text" placeholder="Descreva sua dúvida ou sintoma…" aria-label="Mensagem" required>
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+  <footer class="rodape">
+    <p>{{ disclaimer }}</p>
+  </footer>
+
+  <script>window.__DISCLAIMER__ = {{ disclaimer|tojson }};</script>
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
