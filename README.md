@@ -192,5 +192,5 @@ base64. Setup completo e troubleshooting em [`mobile/README.md`](mobile/README.m
 
 ## 🎥 Apresentação em vídeo
 
-- **Fase 5 — Assistente Conversacional (até 3 min):** _[link a ser inserido]_
-- **Fase 4 — Triagem visual de raios-X:** _[link a ser inserido]_
+- **Fase 5 — Assistente Conversacional (até 3 min):** _[https://youtu.be/LAfh4F3gg7s]_
+- **Fase 4 — Triagem visual de raios-X:** _[https://youtu.be/9yNuFFIm19I]_
