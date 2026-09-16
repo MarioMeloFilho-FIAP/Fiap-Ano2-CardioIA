@@ -1,5 +1,6 @@
 # CardioIA — Fase 4 / Cap 1: Visão Computacional na Clínica
-# Python 3.11 (TensorFlow não suporta 3.14). Crie o venv com `python3.11 -m venv`.
+# Python 3.11 (TensorFlow não suporta 3.14). Venv gerenciado por uv: `make prep-venv`
+# (uv venv --python 3.11 + uv pip install -r requirements.txt).
 
 # --- Deep Learning / Visão Computacional ---
 tensorflow==2.16.2          # Keras 3 incluso; VGG16/ResNet em keras.applications

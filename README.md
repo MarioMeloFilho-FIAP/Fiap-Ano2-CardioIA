@@ -22,6 +22,50 @@ web Flask** e em um **app mobile (React Native)**, ambos com mapa de calor
 📚 Explicação didática de **todos os conceitos** de ML/redes neurais usados (com
 ponteiros para o código): [`docs/CONCEITOS.md`](docs/CONCEITOS.md).
 
+---
+
+## 🆕 Fase 5 — Assistente Cardiológico Conversacional (Chatbot)
+
+Evolução do projeto para **interação inteligente**: um **assistente
+conversacional** que atende o paciente em linguagem natural, identifica a
+**intenção** e as **entidades** clínicas da mensagem e responde de forma
+estruturada, ética e rastreável (disciplina PCV — PLN, Chatbots & Virtual Agents).
+
+**Arquitetura híbrida NLU + NLG** (Cap10, Código 10): motor de entendimento
+determinístico + camada de geração opcional por LLM.
+
+| Parte | Conteúdo | Onde |
+|---|---|---|
+| **Parte 1** | Backend do assistente (NLU/NLG, roteador, storage) + JSON do assistente | `chatbot/`, `chatbot/skill_cardio.json`, `docs/RELATORIO_FASE5_PARTE1.md` |
+| **Parte 2** | Interfaces: chat web (Flask) + aba no app mobile | `chatbot/templates/chat.html`, `mobile/src/ChatScreen.tsx` |
+
+**Destaques**
+- **Watson híbrido:** o `chatbot/skill_cardio.json` é **importável no IBM Watson
+  Assistant** e também lido por um **motor NLU local** — funciona offline (na
+  avaliação/vídeo) e usa o Watson real quando há credenciais (`WA_*`).
+- **Guardrail de emergência:** sintomas graves → orientação determinística
+  **SAMU 192**, nunca pelo LLM.
+- **NLG neutra e opcional:** OpenAI / Anthropic / Gemini via env (auto-detecção).
+- **Governança (Cap07):** disclaimer em toda resposta, segredos só via `.env`,
+  histórico rastreável em **SQLite**.
+
+**Como executar (não precisa de TensorFlow):**
+
+```bash
+make chat-venv     # cria o venv leve da Fase 5 (Flask) e instala dependências
+make chat          # sobe o assistente em http://localhost:5001
+make chat-test     # roda a suíte de testes da Fase 5 (27 casos)
+```
+
+Para a demo mobile, suba o `make chat` e, em outro terminal,
+`cd mobile && npx expo start` → aba **Assistente**. Configuração opcional de
+Watson/LLM em [`chatbot/.env.example`](chatbot/.env.example).
+
+📚 Conceitos da fase: [`docs/CONCEITOS_FASE5.md`](docs/CONCEITOS_FASE5.md) ·
+🎬 roteiro do vídeo: [`docs/ROTEIRO_VIDEO_FASE5.md`](docs/ROTEIRO_VIDEO_FASE5.md).
+
+---
+
 ## Stack
 
 - **Python 3.11** (TensorFlow não suporta o 3.14 do sistema — venv dedicado).
@@ -46,7 +90,8 @@ tests/        testes pytest (preprocessing, inference, fairness)
 
 ## Como executar
 
-Pré-requisito: `python3.11` instalado.
+Pré-requisito: [`uv`](https://docs.astral.sh/uv/) instalado (gerencia o venv e o
+Python 3.11 — `uv` baixa o interpretador se necessário).
 
 ```bash
 make prep-venv     # cria o venv (Python 3.11) e instala as dependências

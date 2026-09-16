@@ -1,0 +1,13 @@
+# CardioIA — Fase 5: dependências OPCIONAIS do assistente.
+# Instale com:  make chat-extras   (ou uv pip install -r chatbot/requirements-optional.txt)
+# Nada aqui é obrigatório: sem estes pacotes, o assistente roda com o motor NLU
+# local. Instale só o que for usar; cada integração ainda exige suas credenciais
+# no chatbot/.env (WA_* para o Watson; *_API_KEY para o LLM).
+
+# --- Integração real com IBM Watson Assistant ---
+ibm-watson==11.2.0
+
+# --- Camada NLG (LLM) — escolha o(s) provedor(es) que for usar ---
+openai==3.14.1
+# anthropic
+# google-generativeai

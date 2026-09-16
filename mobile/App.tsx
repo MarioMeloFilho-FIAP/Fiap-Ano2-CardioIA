@@ -13,9 +13,41 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { classificarImagem } from './src/api';
 import type { EstadoTela, Modelo } from './src/types';
+import ChatScreen from './src/ChatScreen';
+
+type Aba = 'triagem' | 'assistente';
 
 export default function App() {
-  // Estados locais event-driven — nada de useEffect para derivar valores.
+  // Alterna entre a triagem de raios-X (Fase 4) e o assistente (Fase 5).
+  const [aba, setAba] = useState<Aba>('assistente');
+
+  return (
+    <View style={styles.app}>
+      <StatusBar style="light" />
+      <View style={styles.header}>
+        <Text style={styles.titulo}>CardioIA</Text>
+        <View style={styles.abas}>
+          {(['assistente', 'triagem'] as const).map((a) => (
+            <Pressable
+              key={a}
+              onPress={() => setAba(a)}
+              style={[styles.aba, aba === a && styles.abaAtiva]}
+            >
+              <Text style={[styles.abaTexto, aba === a && styles.abaTextoAtivo]}>
+                {a === 'assistente' ? 'Assistente' : 'Triagem raio-X'}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+      </View>
+
+      {aba === 'assistente' ? <ChatScreen /> : <TriagemScreen />}
+    </View>
+  );
+}
+
+/** Tela da Fase 4: triagem visual de raios-X (consome POST /api/predict). */
+function TriagemScreen() {
   const [imagemUri, setImagemUri] = useState<string | null>(null);
   const [modelo, setModelo] = useState<Modelo>('transfer');
   const [estado, setEstado] = useState<EstadoTela>({ fase: 'inicial' });
@@ -26,11 +58,10 @@ export default function App() {
       allowsEditing: true,
       quality: 1,
     });
-    // noUncheckedIndexedAccess: assets[0] pode ser undefined — checamos antes.
     const asset = resultado.canceled ? undefined : resultado.assets[0];
     if (asset) {
       setImagemUri(asset.uri);
-      setEstado({ fase: 'inicial' }); // limpa resultado anterior
+      setEstado({ fase: 'inicial' });
     }
   };
 
@@ -43,14 +74,8 @@ export default function App() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <StatusBar style="light" />
+      <Text style={styles.subtitulo}>Triagem visual de raios-X</Text>
 
-      <View style={styles.header}>
-        <Text style={styles.titulo}>CardioIA</Text>
-        <Text style={styles.subtitulo}>Triagem visual de raios-X</Text>
-      </View>
-
-      {/* Seletor de modelo */}
       <View style={styles.modelos}>
         {(['transfer', 'scratch'] as const).map((m) => (
           <Pressable
@@ -81,7 +106,6 @@ export default function App() {
         <Text style={styles.botaoTexto}>Classificar</Text>
       </Pressable>
 
-      {/* Render por fase — a união discriminada garante que cobrimos todos os casos */}
       {estado.fase === 'carregando' && (
         <ActivityIndicator size="large" color="#1565c0" style={{ marginTop: 24 }} />
       )}
@@ -121,10 +145,23 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, paddingTop: 60, backgroundColor: '#f4f6f9', flexGrow: 1 },
-  header: { alignItems: 'center', marginBottom: 20 },
-  titulo: { fontSize: 30, fontWeight: '800', color: '#0d3c75' },
-  subtitulo: { fontSize: 15, color: '#5b6470' },
+  app: { flex: 1, backgroundColor: '#f4f6f9' },
+  header: { backgroundColor: '#0d3c75', paddingTop: 54, paddingBottom: 12, alignItems: 'center' },
+  titulo: { fontSize: 26, fontWeight: '800', color: '#fff' },
+  abas: { flexDirection: 'row', gap: 8, marginTop: 10 },
+  aba: {
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.6)',
+  },
+  abaAtiva: { backgroundColor: '#fff' },
+  abaTexto: { color: '#fff', fontWeight: '600', fontSize: 13 },
+  abaTextoAtivo: { color: '#0d3c75' },
+
+  container: { padding: 20, flexGrow: 1 },
+  subtitulo: { fontSize: 15, color: '#5b6470', textAlign: 'center', marginBottom: 16 },
   modelos: { flexDirection: 'row', justifyContent: 'center', gap: 10, marginBottom: 16 },
   chip: {
     paddingVertical: 8,

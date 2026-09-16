@@ -1,0 +1,282 @@
+{
+  "name": "CardioIA - Assistente Cardiologico",
+  "description": "Assistente cardiologico conversacional de atendimento inicial ao paciente (Fase 5 - CardioIA). Formato compativel com importacao no IBM Watson Assistant (skill/workspace) e lido tambem pelo motor NLU local.",
+  "language": "pt-br",
+  "learning_opt_out": true,
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2021-11-27"
+    }
+  },
+  "intents": [
+    {
+      "intent": "saudacao",
+      "description": "Cumprimentos e inicio de conversa",
+      "examples": [
+        {"text": "oi"},
+        {"text": "ola"},
+        {"text": "bom dia"},
+        {"text": "boa tarde"},
+        {"text": "boa noite"},
+        {"text": "tudo bem"},
+        {"text": "oi, preciso de ajuda"},
+        {"text": "ola, pode me ajudar"}
+      ]
+    },
+    {
+      "intent": "despedida",
+      "description": "Encerramento da conversa e agradecimentos",
+      "examples": [
+        {"text": "tchau"},
+        {"text": "obrigado"},
+        {"text": "obrigada"},
+        {"text": "muito obrigado, ate mais"},
+        {"text": "era so isso"},
+        {"text": "por enquanto e so"},
+        {"text": "valeu, ate logo"}
+      ]
+    },
+    {
+      "intent": "emergencia",
+      "description": "Situacoes graves que exigem socorro imediato",
+      "examples": [
+        {"text": "estou com dor forte no peito"},
+        {"text": "dor no peito e falta de ar"},
+        {"text": "sinto o peito apertado e o braco esquerdo dormente"},
+        {"text": "acho que estou tendo um infarto"},
+        {"text": "muita falta de ar e suor frio"},
+        {"text": "meu pai desmaiou e nao responde"},
+        {"text": "dor no peito que irradia para o queixo"},
+        {"text": "palpitacao forte com tontura e quase desmaiei"}
+      ]
+    },
+    {
+      "intent": "sintomas",
+      "description": "Relato de sintomas cardiologicos para orientacao geral",
+      "examples": [
+        {"text": "estou sentindo palpitacoes"},
+        {"text": "meu coracao esta acelerado"},
+        {"text": "tenho sentido cansaco ao subir escadas"},
+        {"text": "minhas pernas estao inchadas"},
+        {"text": "sinto tontura de vez em quando"},
+        {"text": "ando com o coracao disparado"},
+        {"text": "sinto um leve desconforto no peito ao esforco"},
+        {"text": "tenho falta de ar quando caminho rapido"}
+      ]
+    },
+    {
+      "intent": "agendar_consulta",
+      "description": "Marcar consulta com especialista",
+      "examples": [
+        {"text": "quero marcar uma consulta"},
+        {"text": "preciso agendar com o cardiologista"},
+        {"text": "como marco uma consulta"},
+        {"text": "gostaria de agendar um retorno"},
+        {"text": "tem horario com clinico geral"},
+        {"text": "quero uma consulta em sao paulo"},
+        {"text": "marcar consulta para a proxima semana"},
+        {"text": "quero remarcar minha consulta"}
+      ]
+    },
+    {
+      "intent": "duvida_medicamento",
+      "description": "Duvidas sobre medicamentos de uso cardiologico",
+      "examples": [
+        {"text": "para que serve o losartana"},
+        {"text": "posso tomar o remedio da pressao a noite"},
+        {"text": "esqueci de tomar o atenolol"},
+        {"text": "o captopril da tosse"},
+        {"text": "posso parar o remedio se a pressao normalizar"},
+        {"text": "duvida sobre a dosagem do meu medicamento"},
+        {"text": "o anticoagulante pode ser tomado com anti-inflamatorio"}
+      ]
+    },
+    {
+      "intent": "resultado_exame",
+      "description": "Status e entendimento de resultados de exames",
+      "examples": [
+        {"text": "quando sai o resultado do meu exame"},
+        {"text": "quero ver o resultado do eletrocardiograma"},
+        {"text": "meu exame de sangue ja ficou pronto"},
+        {"text": "como acesso o laudo do ecocardiograma"},
+        {"text": "o resultado do holter ja saiu"},
+        {"text": "onde vejo o resultado dos meus exames"}
+      ]
+    },
+    {
+      "intent": "habitos_saudaveis",
+      "description": "Prevencao, alimentacao e habitos para a saude do coracao",
+      "examples": [
+        {"text": "o que fazer para cuidar do coracao"},
+        {"text": "quais alimentos sao bons para o coracao"},
+        {"text": "quanto exercicio devo fazer por semana"},
+        {"text": "como reduzir o colesterol naturalmente"},
+        {"text": "dicas para baixar a pressao"},
+        {"text": "parar de fumar ajuda o coracao"},
+        {"text": "como ter uma vida mais saudavel"}
+      ]
+    },
+    {
+      "intent": "fatores_risco",
+      "description": "Fatores de risco cardiovascular",
+      "examples": [
+        {"text": "quais sao os fatores de risco do coracao"},
+        {"text": "hipertensao aumenta risco de infarto"},
+        {"text": "diabetes afeta o coracao"},
+        {"text": "colesterol alto e perigoso"},
+        {"text": "historico familiar conta como risco"},
+        {"text": "obesidade prejudica o coracao"},
+        {"text": "quem tem mais risco de doenca cardiaca"}
+      ]
+    },
+    {
+      "intent": "duvida_aberta",
+      "description": "Duvidas gerais e abertas sobre saude cardiovascular (roteavel para NLG)",
+      "examples": [
+        {"text": "o que e insuficiencia cardiaca"},
+        {"text": "como funciona uma arritmia"},
+        {"text": "qual a diferenca entre infarto e avc"},
+        {"text": "por que a pressao alta faz mal"},
+        {"text": "o que acontece durante um cateterismo"},
+        {"text": "me explica o que e um sopro no coracao"},
+        {"text": "como o estresse afeta o coracao"}
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sintoma",
+      "fuzzy_match": true,
+      "values": [
+        {"type": "synonyms", "value": "dor no peito", "synonyms": ["dor no torax", "aperto no peito", "peito apertado", "peso no peito", "dor toracica", "dor no coracao"]},
+        {"type": "synonyms", "value": "falta de ar", "synonyms": ["dificuldade para respirar", "sem ar", "ofego", "cansaco para respirar", "dispneia"]},
+        {"type": "synonyms", "value": "palpitacao", "synonyms": ["coracao acelerado", "coracao disparado", "taquicardia", "batedeira", "coracao batendo forte"]},
+        {"type": "synonyms", "value": "tontura", "synonyms": ["vertigem", "cabeca leve", "quase desmaiei", "tonteira"]},
+        {"type": "synonyms", "value": "desmaio", "synonyms": ["desmaiou", "sincope", "perda de consciencia", "apagou"]},
+        {"type": "synonyms", "value": "inchaco", "synonyms": ["pernas inchadas", "edema", "inchaço nos pes", "retencao de liquido"]},
+        {"type": "synonyms", "value": "suor frio", "synonyms": ["suor gelado", "suando frio"]},
+        {"type": "synonyms", "value": "cansaco", "synonyms": ["fadiga", "canseira", "cansaço ao esforco"]}
+      ]
+    },
+    {
+      "entity": "medicamento",
+      "fuzzy_match": true,
+      "values": [
+        {"type": "synonyms", "value": "losartana", "synonyms": ["losartan"]},
+        {"type": "synonyms", "value": "atenolol", "synonyms": []},
+        {"type": "synonyms", "value": "captopril", "synonyms": []},
+        {"type": "synonyms", "value": "enalapril", "synonyms": []},
+        {"type": "synonyms", "value": "sinvastatina", "synonyms": ["estatina"]},
+        {"type": "synonyms", "value": "anticoagulante", "synonyms": ["varfarina", "marevan", "afinador de sangue"]},
+        {"type": "synonyms", "value": "aas", "synonyms": ["aspirina", "acido acetilsalicilico"]}
+      ]
+    },
+    {
+      "entity": "especialidade",
+      "fuzzy_match": true,
+      "values": [
+        {"type": "synonyms", "value": "cardiologista", "synonyms": ["cardio", "medico do coracao"]},
+        {"type": "synonyms", "value": "clinico geral", "synonyms": ["clinico", "generalista"]}
+      ]
+    },
+    {
+      "entity": "cidade",
+      "fuzzy_match": true,
+      "values": [
+        {"type": "synonyms", "value": "sao paulo", "synonyms": ["sp", "sampa"]},
+        {"type": "synonyms", "value": "rio de janeiro", "synonyms": ["rj", "rio"]},
+        {"type": "synonyms", "value": "belo horizonte", "synonyms": ["bh"]},
+        {"type": "synonyms", "value": "curitiba", "synonyms": ["cwb"]}
+      ]
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "welcome",
+      "dialog_node": "welcome",
+      "conditions": "welcome",
+      "previous_sibling": null,
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Ola! Sou o assistente virtual do CardioIA. Posso orientar sobre sintomas, agendamento de consultas, exames, medicamentos e habitos saudaveis. Como posso ajudar? (Atencao: nao faco diagnostico; em emergencia ligue 192.)"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_emergencia",
+      "dialog_node": "no_emergencia",
+      "conditions": "#emergencia",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "ATENCAO: os sinais que voce descreve podem indicar uma EMERGENCIA cardiaca. Ligue imediatamente para o SAMU (192) ou procure o pronto-socorro mais proximo. Se possivel, nao fique sozinho(a) e permaneca em repouso. Nao dirija ate o hospital."}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_saudacao",
+      "dialog_node": "no_saudacao",
+      "conditions": "#saudacao",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Ola! Que bom falar com voce. Posso ajudar com sintomas, consultas, exames, medicamentos, fatores de risco e habitos saudaveis. Sobre o que voce gostaria de conversar?"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_despedida",
+      "dialog_node": "no_despedida",
+      "conditions": "#despedida",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Cuide-se bem! Lembre-se de manter o acompanhamento com seu medico. Ate logo e um bom cuidado com o seu coracao."}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_sintomas",
+      "dialog_node": "no_sintomas",
+      "conditions": "#sintomas",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Entendi que voce esta sentindo alguns sintomas. Sintomas cardiovasculares merecem avaliacao medica. Recomendo agendar uma consulta com um cardiologista para uma avaliacao adequada. Se os sintomas forem intensos, subitos ou vierem acompanhados de dor no peito e falta de ar, procure atendimento de urgencia (192). Quer que eu ajude a agendar uma consulta?"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_agendar_consulta",
+      "dialog_node": "no_agendar_consulta",
+      "conditions": "#agendar_consulta",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Posso ajudar com o agendamento. Para prosseguir, me informe: (1) a especialidade desejada (cardiologista ou clinico geral), (2) a cidade e (3) a data de preferencia. Assim que tivermos esses dados, encaminho sua solicitacao para a central de agendamento."}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_duvida_medicamento",
+      "dialog_node": "no_duvida_medicamento",
+      "conditions": "#duvida_medicamento",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Posso dar orientacoes gerais sobre medicamentos, mas nao posso ajustar doses nem indicar interrupcao de tratamento — isso deve ser feito pelo seu medico ou farmaceutico. Nunca pare um remedio por conta propria. Se esqueceu uma dose, siga a orientacao da bula e nao dobre a dose seguinte. Quer que eu registre a duvida para o seu medico?"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_resultado_exame",
+      "dialog_node": "no_resultado_exame",
+      "conditions": "#resultado_exame",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Os resultados de exames costumam ficar disponiveis no portal do paciente assim que liberados pelo laboratorio. Prazos comuns: exames de sangue em 1-2 dias uteis; eletrocardiograma no mesmo dia; ecocardiograma e holter em ate 3 dias uteis. A interpretacao do laudo deve ser feita pelo seu medico. Quer orientacao de como acessar o portal?"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_habitos_saudaveis",
+      "dialog_node": "no_habitos_saudaveis",
+      "conditions": "#habitos_saudaveis",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Otima iniciativa cuidar do coracao! Boas praticas gerais: alimentacao com pouco sal e gordura saturada, rica em frutas, verduras e graos integrais; pelo menos 150 minutos de atividade fisica moderada por semana; nao fumar; moderar o alcool; dormir bem e controlar o estresse; e manter pressao, glicemia e colesterol sob acompanhamento. Adapte sempre com orientacao do seu medico."}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_fatores_risco",
+      "dialog_node": "no_fatores_risco",
+      "conditions": "#fatores_risco",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Os principais fatores de risco cardiovascular sao: hipertensao (pressao alta), colesterol elevado, diabetes, tabagismo, obesidade, sedentarismo, historico familiar, idade avancada e estresse cronico. Muitos sao controlaveis com habitos saudaveis e acompanhamento medico. Quer dicas de como reduzir algum desses fatores?"}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "no_duvida_aberta",
+      "dialog_node": "no_duvida_aberta",
+      "conditions": "#duvida_aberta",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Essa e uma otima duvida sobre saude cardiovascular. Posso explicar de forma geral e educativa, mas lembre-se de que apenas o seu medico pode avaliar o seu caso especifico. Recomendo levar essa pergunta na proxima consulta. Se quiser, posso ajudar a agendar uma consulta ou orientar sobre habitos saudaveis e fatores de risco."}]}]}
+    },
+    {
+      "type": "standard",
+      "title": "anything_else",
+      "dialog_node": "anything_else",
+      "conditions": "anything_else",
+      "output": {"generic": [{"response_type": "text", "values": [{"text": "Nao entendi. Posso ajudar com: sintomas, agendamento de consultas, resultados de exames, duvidas sobre medicamentos, fatores de risco e habitos saudaveis. Poderia reformular a sua pergunta? Em caso de emergencia, ligue 192."}]}]}
+    }
+  ],
+  "counterexamples": []
+}

@@ -1,6 +1,7 @@
 # Python
 venv/
 fiap_ano2_fase4_cap1_venv/
+fiap_ano2_fase5_venv/
 __pycache__/
 *.pyc
 *.pyo
@@ -23,6 +24,10 @@ models/*.h5
 
 # Flask uploads temporários
 webapp/uploads/
+
+# Fase 5 — chatbot: segredos e banco de conversas (não versionar)
+chatbot/.env
+*.db
 
 # OS
 .DS_Store
