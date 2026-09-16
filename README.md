@@ -1,15 +1,5 @@
 # CardioIA — Assistente Cardiológico Inteligente
 
-Projeto acadêmico da FIAP (2º ano) que evolui em fases. A **Fase 5** entrega um
-**assistente conversacional (chatbot)** para o paciente; a **Fase 4** entrega a
-**triagem de imagens médicas (visão computacional)**. As duas frentes convivem no
-mesmo repositório e no mesmo app mobile.
-
-> ⚠️ **Aviso:** protótipo **acadêmico de apoio à decisão**. Não é diagnóstico
-> médico nem substitui a avaliação de um profissional de saúde. Em emergência,
-> ligue **192 (SAMU)**.
-
----
 
 ## 📑 Índice
 
@@ -65,14 +55,14 @@ mensagem do paciente
 
 | Parte | Conteúdo | Onde |
 |---|---|---|
-| **Parte 1** | Backend do assistente (NLU/NLG, roteador, storage) + JSON do assistente | [`chatbot/`](chatbot/), [`chatbot/skill_cardio.json`](chatbot/skill_cardio.json), [`docs/RELATORIO_FASE5_PARTE1.md`](docs/RELATORIO_FASE5_PARTE1.md) |
+| **Parte 1** | Backend do assistente (NLU/NLG, roteador, persistencia) + JSON do assistente | [`chatbot/`](chatbot/), [`chatbot/skill_cardio.json`](chatbot/skill_cardio.json), [`docs/RELATORIO_FASE5_PARTE1.md`](docs/RELATORIO_FASE5_PARTE1.md) |
 | **Parte 2** | Interfaces: chat web (Flask) + aba no app mobile | [`chatbot/templates/chat.html`](chatbot/templates/chat.html), [`mobile/src/ChatScreen.tsx`](mobile/src/ChatScreen.tsx) |
 
 ### ✨ Destaques
 
 - **Watson híbrido:** o [`skill_cardio.json`](chatbot/skill_cardio.json) é
   **importável no IBM Watson Assistant** e também lido por um **motor NLU local** —
-  funciona offline (na avaliação/vídeo) e usa o Watson real quando há credenciais.
+  funciona offline e usa o Watson real quando há credenciais.
 - **Guardrail de emergência:** sintomas graves → orientação determinística
   **SAMU 192**, nunca pelo LLM.
 - **NLG neutra e opcional:** OpenAI / Anthropic / Gemini via `.env` (auto-detecção).
